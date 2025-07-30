@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+:root {
+    --bg-main: #0F0F0F;
+    --text-main: #F4F4F4;
+    --accent: #00C9A7;
+    --detail: #B2B2B2;
+}
+  
+body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'VT323', monospace;
+}
+  
+.bg-bg-main { background-color: var(--bg-main) !important; }
+.text-text-main { color: var(--text-main) !important; }
+.text-accent { color: var(--accent) !important; }
+.bg-accent { background-color: var(--accent) !important; }
+.text-detail { color: var(--detail) !important; }
+.border-accent { border-color: var(--accent) !important; }
+.bg-detail { background-color: var(--detail) !important; }
+.font-pixel { font-family: 'VT323', monospace; }
