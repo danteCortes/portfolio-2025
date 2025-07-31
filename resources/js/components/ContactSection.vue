@@ -29,15 +29,6 @@
                 class="bg-bg-main text-text-main border border-accent rounded px-4 py-2 
                     focus:outline-none focus:ring-2 focus:ring-accent font-pixel"
             ></textarea>
-            <div class="flex items-center gap-2">
-                <span class="text-detail">¿Cuánto es {{ captcha.a }} + {{ captcha.b }}?</span>
-                <input 
-                    v-model.number="captchaInput" 
-                    type="number" 
-                    required 
-                    class="w-20 bg-bg-main text-text-main border border-accent rounded px-2 py-1 font-pixel" 
-                />
-            </div>
             <button 
                 type="submit" 
                 class="bg-accent text-bg-main font-bold py-2 rounded hover:scale-105 transition-transform duration-300"
@@ -50,31 +41,63 @@
   
 <script lang="ts" setup>
     import { ref } from 'vue';
+
+    interface IVerifyResponse {
+        action: string;
+        challenge_ts: string;
+        hostname: string;
+        score: number;
+        success: boolean;
+        errorCodes?: string[];
+    };
     
     const form = ref({ name: '', email: '', message: '' });
     const sent = ref(false);
-    const captcha = ref({ a: Math.floor(Math.random() * 10), b: Math.floor(Math.random() * 10) });
-    const captchaInput = ref<number | null>(null);
     const captchaError = ref(false);
-    
-    function resetCaptcha() {
-        captcha.value = { a: Math.floor(Math.random() * 10), b: Math.floor(Math.random() * 10) };
-        captchaInput.value = null;
+
+    const verify = async (token: string): Promise<IVerifyResponse> => {
+        try {
+            const response = await fetch('/api/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+            });
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            console.error('Error al verificar el token de reCAPTCHA:', error);
+            throw error;
+        }
     }
     
-    function submitForm() {
-        if (captchaInput.value !== captcha.value.a + captcha.value.b) {
-            captchaError.value = true;
-            resetCaptcha();
-            return;
-        }
-        captchaError.value = false;
-        sent.value = true;
-        setTimeout(() => {
-            sent.value = false;
-            form.value = { name: '', email: '', message: '' };
-            resetCaptcha();
-        }, 3000);
+    const submitForm = async () => {
+        window.grecaptcha.ready(async function(){
+            try {
+                const token = await window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY, {action: 'submit'});
+
+                const response =await verify(token);
+                
+                if(response.success && response.score >= 0.5) {
+                    captchaError.value = false;
+                } else {
+                    captchaError.value = true;
+                    return;
+                }
+                sent.value = true;
+
+                setTimeout(() => {
+                    sent.value = false;
+                    form.value = { name: '', email: '', message: '' };
+                }, 3000);
+                
+            } catch (error) {
+                console.error(error);
+                captchaError.value = true;
+            }
+        })
     }
 </script>
   

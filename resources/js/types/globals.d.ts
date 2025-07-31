@@ -24,3 +24,17 @@ declare module 'vue' {
         $headManager: ReturnType<typeof createHeadManager>;
     }
 }
+
+declare global {
+    interface Window {
+        grecaptcha: ReCaptchaV3.ReCaptcha;
+    }
+}
+
+declare namespace ReCaptchaV3 {
+    interface ReCaptcha {
+        ready: (callback: () => void) => void;
+        execute: (siteKey: string, options: { action: string }) => Promise<string>;
+        // Otras funciones si las necesitas
+    }
+}
