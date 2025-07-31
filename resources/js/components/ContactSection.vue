@@ -32,6 +32,7 @@
             <button 
                 type="submit" 
                 class="bg-accent text-bg-main font-bold py-2 rounded hover:scale-105 transition-transform duration-300"
+                :disabled="spin"
             >Enviar</button>
             <p v-if="sent" class="text-accent mt-2">¡Mensaje enviado! Te responderé pronto.</p>
             <p v-if="captchaError" class="text-red-500 mt-2">Captcha incorrecto, intenta de nuevo.</p>
@@ -54,6 +55,7 @@
     const form = ref({ name: '', email: '', message: '' });
     const sent = ref(false);
     const captchaError = ref(false);
+    const spin = ref<boolean>(false);
 
     const verify = async (token: string): Promise<IVerifyResponse> => {
         try {
@@ -72,8 +74,27 @@
             throw error;
         }
     }
+
+    const sendMail = async () => {
+        try {
+            const response = await fetch('/api/contact/shipped', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form.value),
+            });
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+            throw error;
+        }
+    }
     
     const submitForm = async () => {
+        spin.value = true;
         window.grecaptcha.ready(async function(){
             try {
                 const token = await window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY, {action: 'submit'});
@@ -82,16 +103,16 @@
                 
                 if(response.success && response.score >= 0.5) {
                     captchaError.value = false;
+
+                    await sendMail();
+                    form.value = { name: '', email: '', message: '' };
+                    sent.value = true;
+                    spin.value = false;
+
                 } else {
                     captchaError.value = true;
                     return;
                 }
-                sent.value = true;
-
-                setTimeout(() => {
-                    sent.value = false;
-                    form.value = { name: '', email: '', message: '' };
-                }, 3000);
                 
             } catch (error) {
                 console.error(error);
