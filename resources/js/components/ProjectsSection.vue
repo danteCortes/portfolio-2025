@@ -8,13 +8,17 @@
             <div 
                 v-for="project in projects" 
                 :key="project.title" 
-                class="flex-shrink-0 w-72 h-104 bg-[#181818] rounded-2xl shadow-lg p-4 flex 
+                class="flex-shrink-0 w-76 h-112 bg-[#181818] rounded-2xl shadow-lg p-4 flex 
                     flex-col hover:scale-105 transition-transform duration-300 animate-fade-in" 
                 style="aspect-ratio:3/4; min-width:18rem;"
             >
-                <img :src="project.image" :alt="project.title" class="w-full h-40 object-cover rounded mb-4" />
+                <img 
+                    :src="project.image"
+                    :alt="project.technologies.join(', ')"
+                    class="w-full h-40 object-cover rounded mb-4"
+                />
                 <h3 class="text-2xl text-accent font-bold mb-2">{{ project.title }}</h3>
-                <p class="text-detail mb-2 flex-1">{{ project.description }}</p>
+                <p class="text-detail mb-2 flex-1 text-sm">{{ project.description }}</p>
                 <div class="flex flex-wrap gap-2 mt-2">
                     <span 
                         v-for="tech in project.technologies" 
@@ -29,6 +33,24 @@
   
 <script lang="ts" setup>
     const projects = [
+        {
+            title: 'Sistema de Transportes',
+            image: '/tocacheexpress.png',
+            description: 'Aplicación web para gestionar vehículos, conductores, pasajeros y encomiendas con facturación electrónica integrada.',
+            technologies: ['Laravel', 'Vue.js', 'JQuery', 'Bootstrap', 'MySQL', 'Docker', 'CI/CD', 'VPS'],
+        },
+        {
+            title: 'Salud Ocupacional',
+            image: '/cayetanoheredia.png',
+            description: 'Aplicación web para registro de pacientes, exámenes clínicos y seguimiento de resultados.',
+            technologies: ['Laravel', 'React', 'Tailwind', 'MySQL', 'Docker', 'CI/CD', 'VPS'],
+        },
+        {
+            title: 'Recolección de Datos',
+            image: '/zenner.png',
+            description: 'Sistema para registrar los datos recolectados por un grupo electrógeno que alimenta una torre de telecomunicaciones.',
+            technologies: ['Laravel', 'Vue.js', 'Bootstrap', 'MySQL', 'Docker', 'AWS'],
+        },
         {
             title: 'Gestor de Tareas',
             image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80',

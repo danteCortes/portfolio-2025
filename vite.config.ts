@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig(async ({mode}) => {
+export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '');
     return {
         server: {
@@ -11,7 +11,8 @@ export default defineConfig(async ({mode}) => {
             port: parseInt(env.VITE_PORT) || 5173,
             strictPort: true,
             hmr: {
-                host: env.VITE_HOST || 'localhost'
+                host: env.VITE_HOST || 'localhost',
+                protocol: 'wss'
             }
         },
         plugins: [

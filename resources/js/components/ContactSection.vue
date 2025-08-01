@@ -32,8 +32,14 @@
             <button 
                 type="submit" 
                 class="bg-accent text-bg-main font-bold py-2 rounded hover:scale-105 transition-transform duration-300"
-                :disabled="spin"
+                v-if="!spin"
             >Enviar</button>
+            <button 
+                v-else
+                type="button" 
+                class="bg-accent text-bg-main font-bold py-2 rounded hover:scale-105 transition-transform duration-300"
+                disabled
+            >Enviando ...</button>
             <p v-if="sent" class="text-accent mt-2">¡Mensaje enviado! Te responderé pronto.</p>
             <p v-if="captchaError" class="text-red-500 mt-2">Captcha incorrecto, intenta de nuevo.</p>
         </form>

@@ -28,7 +28,7 @@ class ContactShipped extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('dante.e.cortes@gmail.com', 'Dante Cortes'),
+            from: new Address($this->data['email'], $this->data['name']),
             subject: 'Tratan de contactarnos.',
         );
     }

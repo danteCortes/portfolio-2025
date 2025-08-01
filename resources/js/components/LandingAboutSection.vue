@@ -1,7 +1,7 @@
 <template>
     <section id="home" class="min-h-screen flex flex-col md:flex-row items-center justify-center bg-bg-main text-text-main font-pixel pt-20">
         <div class="order-1 md:order-2 flex justify-center items-center mb-8 md:mb-0 md:ml-8">
-            <img src="/fotoperfil.jpg" alt="Foto de perfil" class="w-60 h-60 rounded-full border-4 border-accent shadow-lg animate-fade-in-delay" />
+            <img src="/fotoperfil.jpg" alt="Dante Cortés" class="w-60 h-60 rounded-full border-4 border-accent shadow-lg animate-fade-in-delay" />
         </div>
         <div class="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left animate-fade-in">
             <h1 class="text-5xl md:text-7xl font-bold mb-4">Hola, soy <span class="text-accent">Dante Cortés</span></h1>

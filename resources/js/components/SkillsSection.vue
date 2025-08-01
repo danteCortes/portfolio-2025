@@ -1,7 +1,7 @@
 <template>
     <section class="py-16 bg-bg-main text-text-main font-pixel px-2">
         <h2 class="text-3xl font-bold text-accent mb-8 text-center">Habilidades Técnicas</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto overflow-x-auto pb-2">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto overflow-x-auto p-2">
             <div 
                 v-for="skill in skills" 
                 :key="skill.name" 
