@@ -1,4 +1,5 @@
 <template>
+	<Head title="Dante Cortés | Desarrollador Web, Backend y Fullstack" />
 	<div class="bg-bg-main min-h-screen">
 		<NavBar />
 		<LandingAboutSection />
@@ -22,6 +23,7 @@
 	import CVSection from '@/components/CVSection.vue';
 	import ContactSection from '@/components/ContactSection.vue';
 	import FooterSection from '@/components/FooterSection.vue';
+import { Head } from '@inertiajs/vue3';
 </script>
 
 <style scoped>
